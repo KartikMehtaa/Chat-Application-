@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "chatapplication.frontendfullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "chatapplication.labels" . | nindent 4 }}
+
+spec:
+  replicas: {{ .Values.frontend.replicaCount }}
+
+  selector:
+    matchLabels:
+      {{- include "chatapplication.frontendselectorLabels" . | nindent 6 }}
+
+  template:
+    metadata:
+      labels:
+        {{- include "chatapplication.frontendlabels" . | nindent 8 }}
+
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}-frontend
+          image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.frontend.image.pullPolicy }}
+
+          ports:
+            - name: http
+              containerPort: {{ .Values.frontend.service.port }}
+              protocol: TCP
+
+          resources:
+            limits:
+              cpu: {{ .Values.frontend.resources.limits.cpu }}
+              memory: {{ .Values.frontend.resources.limits.memory }}

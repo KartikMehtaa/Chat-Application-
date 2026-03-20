@@ -1,0 +1,64 @@
+backend:
+  replicaCount: 1
+
+  image:
+    repository: backend
+    tag: latest
+    pullPolicy: IfNotPresent
+
+  service:
+    type: ClusterIP
+    port: 5000
+
+  resources:
+    limits:
+      cpu: "500m"
+      memory: "256Mi"
+
+  labels:
+    app: backend
+
+
+frontend:
+  replicaCount: 1
+
+  image:
+    repository: frontend
+    tag: latest
+    pullPolicy: IfNotPresent
+
+  service:
+    type: NodePort
+    port: 80
+
+  resources: {}
+
+  labels:
+    app: frontend
+
+
+db:
+  replicaCount: 1
+
+  image:
+    repository: mongo
+    tag: latest
+    pullPolicy: IfNotPresent
+
+  service:
+    type: ClusterIP
+    port: 27017
+
+  resources:
+    limits:
+      cpu: "500m"
+      memory: "256Mi"
+
+  persistence:
+    enabled: true
+    size: 1Gi
+    accessMode: ReadWriteOnce
+    storageClass: ""   # default storage class
+
+  labels:
+    app: db

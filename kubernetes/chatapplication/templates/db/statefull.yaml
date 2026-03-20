@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}-mongo
+
+spec:
+  serviceName: "{{ .Release.Name }}-mongo"
+  replicas: {{ .Values.mongodb.replicaCount }}
+
+  selector:
+    matchLabels:
+      {{- include "chatapplication.mongoselectorLabels" . | nindent 6 }}
+
+  template:
+    metadata:
+      labels:
+        {{- include "chatapplication.mongolabels" . | nindent 8 }}
+
+    spec:
+      containers:
+        - name: mongo
+          image: "{{ .Values.mongodb.image.repository }}:{{ .Values.mongodb.image.tag }}"
+          imagePullPolicy: {{ .Values.mongodb.image.pullPolicy }}
+
+          ports:
+            - containerPort: {{ .Values.mongodb.service.port }}
+
+          env:
+            - name: MONGO_INITDB_DATABASE
+              value: chatapp
+
+          volumeMounts:
+            - name: mongo-storage
+              mountPath: /data/db
+
+          resources:
+            limits:
+              cpu: {{ .Values.mongodb.resources.limits.cpu }}
+              memory: {{ .Values.mongodb.resources.limits.memory }}
+
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-storage
+
+      spec:
+        accessModes:
+          - {{ .Values.mongodb.persistence.accessMode }}
+
+        resources:
+          requests:
+            storage: {{ .Values.mongodb.persistence.size }}
+
+        storageClassName: {{ .Values.mongodb.persistence.storageClass }}
