@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "chatapplication.backendfullname" . }}
+  name: {{ include "chatapplication.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "chatapplication.labels" . | nindent 4 }}
@@ -11,12 +11,12 @@ spec:
 
   selector:
     matchLabels:
-      {{- include "chatapplication.backendselectorLabels" . | nindent 6 }}
+      {{- include "chatapplication.selectorLabels" . | nindent 6 }}
 
   template:
     metadata:
       labels:
-        {{- include "chatapplication.backendlabels" . | nindent 8 }}
+        {{- include "chatapplication.labels" . | nindent 8 }}
 
     spec:
       containers:

@@ -4,15 +4,15 @@ metadata:
   name: {{ .Release.Name }}-mongo
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "chatapplication.dblabels" . | nindent 4 }}
+    {{- include "chatapplication.labels" . | nindent 4 }}
 
 spec:
   clusterIP: None   # 🔥 Headless service (VERY IMPORTANT)
 
   ports:
-    - port: {{ .Values.db.service.port }}
-      targetPort: {{ .Values.db.service.port }}
+    - port: {{ .Values.mongodb.service.port }}
+      targetPort: {{ .Values.mongodb.service.port }}
       protocol: TCP
 
   selector:
-    {{- include "chatapplication.dbselectorLabels" . | nindent 4 }}
+    {{- include "chatapplication.selectorLabels" . | nindent 4 }}

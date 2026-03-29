@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "chatapplication.backendfullname" . }}
+  name: {{ include "chatapplication.fullname" . }}
   labels:
-    {{- include "chatapplication.backendlabels" . | nindent 4 }}
+    {{- include "chatapplication.labels" . | nindent 4 }}
 
 spec:
   type: {{ .Values.backend.service.type }}
@@ -15,4 +15,4 @@ spec:
       name: http
 
   selector:
-    {{- include "chatapplication.backendselectorLabels" . | nindent 4 }}
+    {{- include "chatapplication.selectorLabels" . | nindent 4 }}

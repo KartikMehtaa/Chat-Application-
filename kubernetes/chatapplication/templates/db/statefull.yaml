@@ -9,12 +9,12 @@ spec:
 
   selector:
     matchLabels:
-      {{- include "chatapplication.mongoselectorLabels" . | nindent 6 }}
+      {{- include "chatapplication.selectorLabels" . | nindent 6 }}
 
   template:
     metadata:
       labels:
-        {{- include "chatapplication.mongolabels" . | nindent 8 }}
+        {{- include "chatapplication.labels" . | nindent 8 }}
 
     spec:
       containers:

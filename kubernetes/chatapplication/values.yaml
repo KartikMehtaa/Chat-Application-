@@ -2,7 +2,7 @@ backend:
   replicaCount: 1
 
   image:
-    repository: backend
+    repository: kartikmehta/backend:latest
     tag: latest
     pullPolicy: IfNotPresent
 
@@ -23,7 +23,7 @@ frontend:
   replicaCount: 1
 
   image:
-    repository: frontend
+    repository: kartikmehta/frontend:latest
     tag: latest
     pullPolicy: IfNotPresent
 
@@ -31,15 +31,17 @@ frontend:
     type: NodePort
     port: 80
 
-  resources: {}
+  resources: 
+    limits:
+      cpu: "500m"
+      memory: "256Mi"
 
   labels:
     app: frontend
 
 
-db:
+mongodb:
   replicaCount: 1
-
   image:
     repository: mongo
     tag: latest
@@ -53,6 +55,7 @@ db:
     limits:
       cpu: "500m"
       memory: "256Mi"
+  
 
   persistence:
     enabled: true
@@ -62,3 +65,18 @@ db:
 
   labels:
     app: db
+serviceAccount:
+  create: true
+  name: ""
+  automount: true
+  annotations: {}
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: ""
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
