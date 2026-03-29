@@ -2,7 +2,7 @@ backend:
   replicaCount: 1
 
   image:
-    repository: kartikmehta/backend:latest
+    repository: kartikmehta/backend
     tag: latest
     pullPolicy: IfNotPresent
 
@@ -23,7 +23,7 @@ frontend:
   replicaCount: 1
 
   image:
-    repository: kartikmehta/frontend:latest
+    repository: kartikmehta/frontend
     tag: latest
     pullPolicy: IfNotPresent
 
