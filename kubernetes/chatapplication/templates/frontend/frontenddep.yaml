@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "chatapplication.fullname" . }}
+  name: {{ include "chatapplication.fullname" . }}-frontend
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "chatapplication.labels" . | nindent 4 }}
+    {{ .Values.frontend.labels.app }}
 
 spec:
   replicas: {{ .Values.frontend.replicaCount }}
 
   selector:
     matchLabels:
-      {{- include "chatapplication.selectorLabels" . | nindent 6 }}
+      {{  .Values.frontend.selectorLabels.app }}
 
   template:
     metadata:
@@ -25,7 +25,7 @@ spec:
           imagePullPolicy: {{ .Values.frontend.image.pullPolicy }}
 
           ports:
-            - name: http
+            - name: http-frontend
               containerPort: {{ .Values.frontend.service.port }}
               protocol: TCP
 

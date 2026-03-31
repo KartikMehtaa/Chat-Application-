@@ -1,3 +1,6 @@
+# =======================
+# Backend Configuration
+# =======================
 backend:
   replicaCount: 1
 
@@ -18,7 +21,13 @@ backend:
   labels:
     app: backend
 
+  selectorLabels:
+    app: backend
 
+
+# =======================
+# Frontend Configuration
+# =======================
 frontend:
   replicaCount: 1
 
@@ -30,8 +39,9 @@ frontend:
   service:
     type: NodePort
     port: 80
+    nodePort: 30007   # expose externally
 
-  resources: 
+  resources:
     limits:
       cpu: "500m"
       memory: "256Mi"
@@ -39,12 +49,19 @@ frontend:
   labels:
     app: frontend
 
+  selectorLabels:
+    app: frontend
 
+
+# =======================
+# MongoDB Configuration
+# =======================
 mongodb:
   replicaCount: 1
+
   image:
     repository: mongo
-    tag: latest
+    tag: "6.0"
     pullPolicy: IfNotPresent
 
   service:
@@ -55,28 +72,43 @@ mongodb:
     limits:
       cpu: "500m"
       memory: "256Mi"
-  
 
   persistence:
     enabled: true
     size: 1Gi
     accessMode: ReadWriteOnce
-    storageClass: ""   # default storage class
+    storageClass: ""   # use default or set manually
 
   labels:
-    app: db
+    app: mongodb
+
+  selectorLabels:
+    app: mongodb
+
+
+# =======================
+# Service Account
+# =======================
 serviceAccount:
   create: true
   name: ""
   automount: true
   annotations: {}
+
+
+# =======================
+# Ingress (Optional)
+# =======================
 ingress:
   enabled: false
+
   className: ""
   annotations: {}
+
   hosts:
     - host: ""
       paths:
         - path: /
           pathType: Prefix
+
   tls: []
