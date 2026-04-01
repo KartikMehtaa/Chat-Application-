@@ -9,12 +9,14 @@ spec:
 
   selector:
     matchLabels:
-      app: mongodb
+      app: {{ .Values.mongodb.selectorLabels.app }}
+
 
   template:
     metadata:
       labels:
-        app: mongodb
+        app: {{ .Values.mongodb.labels.app }}
+
 
     spec:
       containers:

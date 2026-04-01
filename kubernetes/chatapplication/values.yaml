@@ -73,11 +73,12 @@ mongodb:
     enabled: true
     size: 1Gi
     accessMode: ReadWriteOnce
-    storageClass: standard   # better than ""
+    storageClass: ""   # better than ""
 
   labels:
     app: mongodb
-
+  selectorLabels:
+    app: mongodb
 
 # =======================
 # Service Account
