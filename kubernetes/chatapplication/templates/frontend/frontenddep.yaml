@@ -4,19 +4,19 @@ metadata:
   name: {{ include "chatapplication.fullname" . }}-frontend
   namespace: {{ .Release.Namespace }}
   labels:
-    {{ .Values.frontend.labels.app }}
+    app: {{ .Values.frontend.labels.app }}
 
 spec:
   replicas: {{ .Values.frontend.replicaCount }}
 
   selector:
     matchLabels:
-      {{  .Values.frontend.selectorLabels.app }}
+      app: {{ .Values.frontend.selectorLabels.app }}
 
   template:
     metadata:
       labels:
-        {{- include "chatapplication.labels" . | nindent 8 }}
+        app: {{ .Values.frontend.labels.app }}
 
     spec:
       containers:
