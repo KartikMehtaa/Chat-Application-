@@ -20,7 +20,8 @@ backend:
 
   labels:
     app: backend
-
+  selectorLabels:
+    app: backendapp
 
 # =======================
 # Frontend Configuration
@@ -45,7 +46,8 @@ frontend:
 
   labels:
     app: frontend
-
+  selectorLabels:
+    app: frontendapp
 
 # =======================
 # MongoDB Configuration
