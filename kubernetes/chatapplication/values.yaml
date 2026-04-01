@@ -1,7 +1,14 @@
 # =======================
+# Global Labels (Optional but Recommended)
+# =======================
+global:
+  appName: chatapplication
+
+# =======================
 # Backend Configuration
 # =======================
 backend:
+  enabled: true
   replicaCount: 1
 
   image:
@@ -20,6 +27,7 @@ backend:
 
   labels:
     app: backend
+
   selectorLabels:
     app: backend
 
@@ -27,6 +35,7 @@ backend:
 # Frontend Configuration
 # =======================
 frontend:
+  enabled: true
   replicaCount: 1
 
   image:
@@ -37,7 +46,8 @@ frontend:
   service:
     type: NodePort
     port: 80
-    nodePort: 30007   # ✅ added
+    targetPort: 80
+    nodePort: 30007   # exposed port
 
   resources:
     limits:
@@ -46,6 +56,7 @@ frontend:
 
   labels:
     app: frontend
+
   selectorLabels:
     app: frontend
 
@@ -53,6 +64,7 @@ frontend:
 # MongoDB Configuration
 # =======================
 mongodb:
+  enabled: true
   replicaCount: 1
 
   image:
@@ -73,10 +85,11 @@ mongodb:
     enabled: true
     size: 1Gi
     accessMode: ReadWriteOnce
-    storageClass: ""   # better than ""
+    storageClass: standard   # change if needed
 
   labels:
     app: mongodb
+
   selectorLabels:
     app: mongodb
 
@@ -89,7 +102,6 @@ serviceAccount:
   automount: true
   annotations: {}
 
-
 # =======================
 # Ingress (Optional)
 # =======================
@@ -100,7 +112,7 @@ ingress:
   annotations: {}
 
   hosts:
-    - host: ""
+    - host: chatapp.local
       paths:
         - path: /
           pathType: Prefix

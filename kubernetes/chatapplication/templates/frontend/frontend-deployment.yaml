@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "chatapplication.fullname" . }}-frontend
+  name: {{ .Release.Name}}-Frontend
   namespace: {{ .Release.Namespace }}
   labels:
     app: {{ .Values.frontend.labels.app }}

@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "chatapplication.fullname" . }}-backend
+  name: {{ .Release.Name }}-backend
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "chatapplication.labels" . | nindent 4 }}
