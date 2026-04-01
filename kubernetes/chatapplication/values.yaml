@@ -21,9 +21,6 @@ backend:
   labels:
     app: backend
 
-  selectorLabels:
-    app: backend
-
 
 # =======================
 # Frontend Configuration
@@ -39,7 +36,7 @@ frontend:
   service:
     type: NodePort
     port: 80
-    nodePort: 30007   # expose externally
+    nodePort: 30007   # ✅ added
 
   resources:
     limits:
@@ -47,9 +44,6 @@ frontend:
       memory: "256Mi"
 
   labels:
-    app: frontend
-
-  selectorLabels:
     app: frontend
 
 
@@ -77,12 +71,9 @@ mongodb:
     enabled: true
     size: 1Gi
     accessMode: ReadWriteOnce
-    storageClass: ""   # use default or set manually
+    storageClass: standard   # better than ""
 
   labels:
-    app: mongodb
-
-  selectorLabels:
     app: mongodb
 
 

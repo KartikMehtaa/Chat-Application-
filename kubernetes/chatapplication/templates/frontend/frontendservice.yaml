@@ -9,9 +9,10 @@ spec:
   type: {{ .Values.frontend.service.type }}
 
   ports:
-    name: http-frontend
-    Protocol: TCP
-    port: {{ .Values.frontend.service.port }}
-    targetPort: {{ .Values.frontend.service.port }}
+    - name: http-frontend
+      protocol: TCP
+      port: {{ .Values.frontend.service.port }}
+      targetPort: {{ .Values.frontend.service.nodePort }}
+
   selector:
     {{- include "chatapplication.selectorLabels" . | nindent 4 }}
