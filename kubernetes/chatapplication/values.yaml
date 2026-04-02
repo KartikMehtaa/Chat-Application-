@@ -13,7 +13,7 @@ backend:
 
   image:
     repository: kartikmehta/backend
-    tag: "{{ .Values.image.tag }}"
+    tag: latest
     pullPolicy: IfNotPresent
 
   service:
@@ -39,9 +39,9 @@ frontend:
   replicaCount: 1
 
   image:
-  repository: kartikmehta/frontend
-  tag: "{{ .Values.image.tag }}"
-  pullPolicy: IfNotPresent
+    repository: kartikmehta/frontend
+    tag: latest
+    pullPolicy: IfNotPresent
 
   service:
     type: NodePort
