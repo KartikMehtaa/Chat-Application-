@@ -14,7 +14,7 @@ backend:
   image:
     repository: kartikmehta/backend
     tag: latest
-    pullPolicy: IfNotPresent
+    pullPolicy: always
 
   service:
     type: ClusterIP
@@ -41,7 +41,7 @@ frontend:
   image:
     repository: kartikmehta/frontend
     tag: latest
-    pullPolicy: IfNotPresent
+    pullPolicy: always
 
   service:
     type: NodePort
