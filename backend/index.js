@@ -4,7 +4,7 @@ import connectDb from "./config/databaseConnect.js";
 import cookieParser from "cookie-parser";
 import authRouter from "./routes/authRoutes.js";
 import cors from "cors";
-const corsOptions = require("./config/corsConfig.js");
+import corsOptions from "./config/corsConfig.js"; // CORS yapılandırmasını içeren dosyayı import ediyoruz.
 import userRouter from "./routes/getCurrentUser.js";
 import messageRouter from "./routes/messageRoute.js";
 import { app, server } from "./socket.io/socket.io.js";
