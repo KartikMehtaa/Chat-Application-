@@ -15,12 +15,6 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors(corsOptions));  // corsConfig.js'den gelen corsOptions'u kullanarak CORS yapılandırması yapıyoruz.
-app.use(
-  cors({
-    origin: "*",   // sab allow
-    credentials: true,
-  })
-);
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
 app.use("/message", messageRouter);
