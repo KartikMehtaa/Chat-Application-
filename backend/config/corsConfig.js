@@ -1,6 +1,6 @@
 // corsConfig.js
 const allowedOrigins = [
-    "http://localhost:8081", 
+    "http://localhost:8081",
     "https://chat-application-30lh.onrender.com"
   ];
   
@@ -15,5 +15,4 @@ const allowedOrigins = [
     credentials: true
   };
   
-  module.exports = corsOptions;
-  
+  export default corsOptions;
