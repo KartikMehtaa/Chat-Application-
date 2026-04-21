@@ -16,7 +16,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   cors({
-    origin: "https://chat-application-30lh.onrender.com",
+    origin: [
+      "http://localhost:8001",
+      "https://chat-application-30lh.onrender.com"
+    ],
     credentials: true,
   })
 );
