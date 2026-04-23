@@ -1,19 +1,13 @@
 from dotenv import load_dotenv
 import os
-import google.generativeai as genai
+from google import genai
 
-# Load .env file
+# Load env
 load_dotenv()
-
-# Get API key
 api_key = os.getenv("GEMINI_API_KEY")
 
-# Configure Gemini
-genai.configure(api_key=api_key)
-
-# Model
-model = genai.GenerativeModel("gemini-1.5-flash")
-
+# Create client
+client = genai.Client(api_key=api_key)
 
 def analyze_logs(logs):
     prompt = f"""
@@ -28,17 +22,16 @@ def analyze_logs(logs):
     {logs}
     """
 
-    response = model.generate_content(prompt)
+    response = client.models.generate_content(
+        model="gemini-1.5-flash",
+        contents=prompt
+    )
 
-    if response and hasattr(response, "text"):
-        return response.text
-    return "No response from Gemini"
+    return response.text
 
 
-# ✅ Correct path
-log_path = "genai/jenkins.log"
-
-print("Looking for:", log_path)
+# Read log
+log_path = "jenkins.log"
 
 if not os.path.exists(log_path):
     print("Log file not found ❌")
@@ -46,8 +39,6 @@ if not os.path.exists(log_path):
 
 with open(log_path, "r") as f:
     logs = f.read()
-
-print("Log file loaded ✅")
 
 result = analyze_logs(logs)
 print(result)
