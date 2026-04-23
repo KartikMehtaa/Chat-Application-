@@ -29,7 +29,7 @@ Logs:
 """
 
         response = client.models.generate_content(
-            model="gemini-1.5-flash",   # change from 2.0 → 1.5
+            model="gemini-1.5-pro",
             contents=prompt
         )
 
