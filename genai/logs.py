@@ -2,8 +2,8 @@ from dotenv import load_dotenv
 import os
 from google import genai
 
-# Load env
 load_dotenv()
+
 api_key = os.getenv("GEMINI_API_KEY")
 
 if not api_key:
@@ -14,22 +14,22 @@ client = genai.Client(api_key=api_key)
 
 def analyze_logs(logs):
     try:
-        logs = logs[-3000:]  # limit logs
+        logs = logs[-3000:]
 
         prompt = f"""
-        You are a DevOps expert.
+You are a DevOps expert.
 
-        Analyze these Jenkins pipeline logs:
-        - Find errors
-        - Explain root cause
-        - Suggest fix
+Analyze these Jenkins pipeline logs:
+- Find errors
+- Explain root cause
+- Suggest fix
 
-        Logs:
-        {logs}
-        """
+Logs:
+{logs}
+"""
 
         response = client.models.generate_content(
-            model="gemini-2.0-flash",
+            model="gemini-1.5-flash",   # change from 2.0 → 1.5
             contents=prompt
         )
 
@@ -39,14 +39,7 @@ def analyze_logs(logs):
         return f"Error analyzing logs: {str(e)}"
 
 
-log_path = "jenkins.log"
-
-if not os.path.exists(log_path):
-    print("Log file not found ❌")
-    exit(1)
-
-with open(log_path, "r") as f:
+with open("jenkins.log", "r") as f:
     logs = f.read()
 
-result = analyze_logs(logs)
-print(result)
+print(analyze_logs(logs))
