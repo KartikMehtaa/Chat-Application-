@@ -6,31 +6,39 @@ from google import genai
 load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
 
-# Create client
+if not api_key:
+    print("API key missing ❌")
+    exit(1)
+
 client = genai.Client(api_key=api_key)
 
 def analyze_logs(logs):
-    prompt = f"""
-    You are a DevOps expert.
+    try:
+        logs = logs[-3000:]  # limit logs
 
-    Analyze these Jenkins pipeline logs:
-    - Find errors
-    - Explain root cause
-    - Suggest fix
+        prompt = f"""
+        You are a DevOps expert.
 
-    Logs:
-    {logs}
-    """
+        Analyze these Jenkins pipeline logs:
+        - Find errors
+        - Explain root cause
+        - Suggest fix
 
-    response = client.models.generate_content(
-        model="gemini-1.5-flash",
-        contents=prompt
-    )
+        Logs:
+        {logs}
+        """
 
-    return response.text
+        response = client.models.generate_content(
+            model="gemini-2.0-flash",
+            contents=prompt
+        )
+
+        return response.text
+
+    except Exception as e:
+        return f"Error analyzing logs: {str(e)}"
 
 
-# Read log
 log_path = "jenkins.log"
 
 if not os.path.exists(log_path):
