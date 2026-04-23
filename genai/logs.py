@@ -35,13 +35,19 @@ def analyze_logs(logs):
     return "No response from Gemini"
 
 
-# Example
-try:
-    with open("jenkins.log", "r") as f:
-        logs = f.read()
-except FileNotFoundError:
-    print("Log file not found")
-    exit()
+# ✅ Correct path
+log_path = "genai/jenkins.log"
+
+print("Looking for:", log_path)
+
+if not os.path.exists(log_path):
+    print("Log file not found ❌")
+    exit(1)
+
+with open(log_path, "r") as f:
+    logs = f.read()
+
+print("Log file loaded ✅")
 
 result = analyze_logs(logs)
 print(result)
