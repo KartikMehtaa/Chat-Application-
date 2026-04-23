@@ -26,4 +26,4 @@ COPY --from=builder /install /usr/local
 COPY . .
 
 # Run app
-CMD ["python", "app.py"]
+CMD ["python", "logs.py"]
