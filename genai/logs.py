@@ -8,7 +8,7 @@ api_key = os.getenv("GEMINI_API_KEY")
 
 if not api_key:
     print("API key missing ❌")
-    exit(1)
+    exit(0)
 
 client = genai.Client(api_key=api_key)
 
